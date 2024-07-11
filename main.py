@@ -1,5 +1,25 @@
 import tkinter as tk
 import subprocess
+import os
+import json
+
+def ensure_json_file_exists(filepath, default_content=[]):
+    if not os.path.isfile(filepath):
+        with open(filepath, 'w') as file:
+            json.dump(default_content, file, indent=4)
+
+def main():
+    folder_path = 'account_data'
+    os.makedirs(folder_path, exist_ok=True)
+
+    json_files = ['agents.json', 'w-engines.json', 'inventory.json']
+
+    for json_file in json_files:
+        filepath = os.path.join(folder_path, json_file)
+        ensure_json_file_exists(filepath)
+
+if __name__ == "__main__":
+    main()
 
 def run_agents():
     subprocess.run(["python", "Agents.py"])
